@@ -1,0 +1,23 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+  
+# 编译选项（支持条件表达式）
+build_option:
+  cpppath:
+    - ./../../lvgl/demos
+    - ./../../lvgl/demos/benchmark
+    - ./../../lvgl/demos/keypad_encoder
+    - ./../../lvgl/demos/music
+    - ./../../lvgl/demos/music/assert
+    - ./../../lvgl/demos/stress
+    - ./../../lvgl/demos/widgets
+    
+ # 源码（支持条件表达式）
+source_file:
+  - ./../../lvgl/demos/*/*.c
+  - ./../../lvgl/demos/*/*/*.c
+

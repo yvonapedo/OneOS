@@ -1,0 +1,20 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  cpppath:
+    - ./
+
+# 源码
+source_file:
+  # - source/*.c?{is_define("OS_USING_lv_binding_js")}
+  # - ./src/*.c
+  # - ./src/*.cpp
+    - ./utils.c
+
+

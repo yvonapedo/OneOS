@@ -1,0 +1,28 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  cpppath:
+    - ./
+    - ./hal
+    - ./hal/device
+    - ../jsruntime
+    - ../jsruntime/deps/quickjs
+    - ../jsruntime/utils
+    - ../deps/libtuv/include
+    - ../render
+    - ../utils
+    - ../deps/lv_drivers/display
+
+# 源码
+source_file:
+    - engine.cpp
+    - hal/device/device.cpp
+
+
+

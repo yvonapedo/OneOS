@@ -1,0 +1,31 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  cpppath:
+    - ./
+    # - ./oos 
+    - ./display
+    - ./gtkdrv
+    - ./indev
+    - ./sdl
+    - ./wayland
+    - ./win32drv
+    - ../../
+
+# 源码
+source_file:
+    - ./win_drv.c
+    - ./display/*.c
+    - ./gtkdrv/*.c
+    - ./indev/*.c
+    - ./sdl/*.c
+    # - ./wayland/*.c
+    - ./win32drv/*.c
+
+

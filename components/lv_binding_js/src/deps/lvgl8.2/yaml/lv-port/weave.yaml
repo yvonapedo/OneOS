@@ -1,0 +1,15 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+  
+# 编译选项（支持条件表达式）
+build_option:
+  cpppath:
+    - ./../../oneos_port
+    
+# 源码（支持条件表达式）
+source_file:
+  - ./../../oneos_port/*.c

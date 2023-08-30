@@ -1,0 +1,41 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  include:
+    - ../../deps/curl/include
+
+  cpppath:
+    - ./
+    # - ./bundle
+    - ./utils
+    - ./deps/quickjs
+    - ../../deps/libtuv
+    - ../../deps/libtuv/include
+
+
+# 源码
+source_file:
+  - ./bootstrap.c
+  - ./curl.c
+  - ./error.c
+  - ./fs.c
+  - ./jsapi.c
+  - ./module.c
+  - ./network.c
+  - ./os.c
+  - ./print.c
+  - ./process.c
+  - ./timer.c
+  - ./util.c
+  - ./vm.c
+  - ./xhr.c
+  - ./myutil.c
+
+add_subdirectory:
+  - deps/quickjs

@@ -1,0 +1,3 @@
+mkdir -p "/usr/local/bin"
+strip qjs qjsc
+install -m755 qjs qjsc "/usr/local/bin"

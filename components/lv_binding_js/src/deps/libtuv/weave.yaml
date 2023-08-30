@@ -1,0 +1,41 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  cpppath:
+    - ./include
+    - ./src
+    - ./src/unix
+
+# 源码
+source_file:
+  # - source/*.c?{is_define("OS_USING_lv_binding_js")}
+  - src/inet.c
+  - src/threadpool.c
+  - src/tuv_debuglog.c
+  - src/unix/async.c
+  # - src/unix/aix.c
+  - src/unix/core.c
+  - src/unix/fs.c
+  - src/unix/getaddrinfo.c
+  - src/unix/loop-watcher.c
+  - src/unix/loop.c
+  - src/unix/stream.c
+  - src/unix/tcp.c
+  # - src/unix/tty.c
+  - src/unix/poll.c
+  - src/unix/thread.c
+  - src/unix/timer.c
+  - src/unix/udp.c
+  - src/unix/oneos.c
+  - src/unix/oneos-event.c
+  # - src/unix/freebsd.c
+  - src/uv-common.c
+  - src/random.c
+  # - src/*.c
+  # - src/unix/*.c

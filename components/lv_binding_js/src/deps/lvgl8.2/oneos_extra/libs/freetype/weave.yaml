@@ -1,0 +1,55 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+  
+# 编译选项（支持条件表达式）
+build_option:
+  cpppath:
+    - .
+    - freetype-2.12.1/include
+  local_ccflags:
+    - ' -std=c99?{is_compiler("gcc")}'
+    - ' --c99 --gnu -g -W?{is_compiler("armcc")}'
+    - ' -std=c99 -g -w?{is_compiler("armclang")}'
+    
+ # 源码（支持条件表达式）
+source_file:
+  - freetype-2.12.1/src/autofit/autofit.c
+  - freetype-2.12.1/src/bdf/bdf.c
+  - freetype-2.12.1/src/cff/cff.c
+  - freetype-2.12.1/src/base/ftbase.c
+  - freetype-2.12.1/src/base/ftinit.c
+  - freetype-2.12.1/src/base/ftsystem.c
+  - freetype-2.12.1/src/base/ftglyph.c
+  - freetype-2.12.1/src/base/ftbitmap.c
+  - freetype-2.12.1/src/cache/ftcache.c
+  - freetype-2.12.1/src/gzip/ftgzip.c
+  - freetype-2.12.1/src/lzw/ftlzw.c
+  - freetype-2.12.1/src/pcf/pcf.c
+  - freetype-2.12.1/src/pfr/pfr.c
+  - freetype-2.12.1/src/psaux/psaux.c
+  - freetype-2.12.1/src/pshinter/pshinter.c
+  - freetype-2.12.1/src/psnames/psmodule.c
+  - freetype-2.12.1/src/raster/raster.c
+  - freetype-2.12.1/src/sfnt/sfnt.c
+  - freetype-2.12.1/src/smooth/smooth.c
+  - freetype-2.12.1/src/truetype/truetype.c
+  - freetype-2.12.1/src/type1/type1.c
+  - freetype-2.12.1/src/type42/type42.c
+  - freetype-2.12.1/src/winfonts/winfnt.c
+  - freetype-2.12.1/src/base/ftdebug.c
+  - freetype-2.12.1/src/cid/cidriver.c
+  - freetype-2.12.1/src/cid/cidobjs.c
+  - freetype-2.12.1/src/cid/cidload.c
+  - freetype-2.12.1/src/cid/cidgload.c
+  - freetype-2.12.1/src/cid/cidparse.c
+  - freetype-2.12.1/src/sdf/ftsdfrend.c
+  - freetype-2.12.1/src/sdf/ftbsdf.c
+  - freetype-2.12.1/src/sdf/ftsdf.c
+  - freetype-2.12.1/src/sdf/ftsdfcommon.c
+  - freetype-2.12.1/src/svg/ftsvg.c
+  - freetype-2.12.1/src/dlg/dlg.c
+  - ft_port_fs.c

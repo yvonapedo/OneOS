@@ -1,0 +1,40 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+  
+# 编译选项（支持条件表达式）
+build_option:
+  cpppath:
+    - ./../../lvgl/examples
+    - ./../../lvgl/examples/anim
+    - ./../../lvgl/examples/event
+    - ./../../lvgl/examples/get_started
+    - ./../../lvgl/examples/layouts
+    - ./../../lvgl/examples/layouts/flex
+    - ./../../lvgl/examples/layouts/grid
+    - ./../../lvgl/examples/libs
+    - ./../../lvgl/examples/libs/bmp
+    - ./../../lvgl/examples/libs/ffmpeg
+    - ./../../lvgl/examples/libs/freetype
+    - ./../../lvgl/examples/libs/gif
+    - ./../../lvgl/examples/libs/png
+    - ./../../lvgl/examples/libs/qrcode
+    - ./../../lvgl/examples/libs/rlottie
+    - ./../../lvgl/examples/libs/sjpg
+    - ./../../lvgl/examples/others
+    - ./../../lvgl/examples/others/gridnav
+    - ./../../lvgl/examples/others/monkey
+    - ./../../lvgl/examples/others/snapshot
+    - ./../../lvgl/examples/porting
+    - ./../../lvgl/examples/scroll
+    - ./../../lvgl/examples/styles
+    - ./../../lvgl/examples/widgets
+  
+ # 源码（支持条件表达式）
+source_file:
+  - ./../../lvgl/examples/*/*.c
+  - ./../../lvgl/examples/*/*/*.c
+

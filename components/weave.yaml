@@ -1,0 +1,34 @@
+# 子目录
+add_subdirectory:
+  - ams
+  - atest
+  - ble
+  - cJSON-v1.7.12
+  - cli
+  - cloud
+  - cms
+  - DBoT
+  - diagnose
+  - dlog
+  - easyflash-v4.1
+  - ffmpeg
+  - fs
+  - gui
+  - iotjs
+  - jerryscript
+  - python
+  - mpu6xxx
+  - net
+  - ocf
+  - onejs
+  - optparse
+  - ota
+  - position
+  - powermanager ? {is_define(['OS_USING_POWER_MANAGER'])}
+  - ramdisk
+  - security
+  - shell
+  - sqlite
+  - telnetd
+  - uai
+  - lv_binding_js

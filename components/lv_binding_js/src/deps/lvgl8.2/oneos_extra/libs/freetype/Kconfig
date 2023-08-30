@@ -1,0 +1,6 @@
+menu "FreeType"
+   config OS_USING_LVGL_EXTRA_FREETYPE
+        bool "Enable FreeType v2.12.1"
+        select OS_USING_GUI_LVGL_FILESYSTEM
+        default n
+endmenu

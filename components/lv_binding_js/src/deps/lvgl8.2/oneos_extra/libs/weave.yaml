@@ -1,0 +1,3 @@
+# 子目录（支持条件表达式）
+add_subdirectory:
+  - freetype

@@ -1,0 +1,8 @@
+
+menu "QuickJS"
+
+    config USING_QUICKJS
+    bool "enable QuickJS"
+    default n
+
+endmenu

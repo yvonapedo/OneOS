@@ -1,0 +1,14 @@
+
+menu "lv_binding_js"
+    config USING_lv_binding_js
+    bool "enable lv_binding_js"
+    select USING_LVGL_8.2
+    default n
+        
+    menuconfig USING_LVGL_8.2
+        bool "Enable LVGL8.2"
+        default n
+        if USING_LVGL_8.2
+        source "$OS_ROOT/components/lv_binding_js/src/deps/lvgl8.2/Kconfig"
+        endif
+endmenu

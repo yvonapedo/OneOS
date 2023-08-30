@@ -1,0 +1,793 @@
+menu "LVGL basic menu"
+
+    config LV_CONF_MINIMAL
+        bool "LVGL minimal configuration."
+        default n
+
+if !LV_CONF_MINIMAL
+    config OS_LV_BUFF_LINES
+        int "LVGL buff lines"
+        range 1 1000
+        default 120
+endif
+if LV_CONF_MINIMAL
+    config OS_LV_BUFF_LINES
+        int "LVGL buff lines"
+        range 1 1000
+        default 1
+endif
+
+    config LV_DISP_DEF_REFR_PERIOD
+        int "LVGL display refresh period(ms)"
+        range 10 100
+        default 30
+    
+    config LV_INDEV_DEF_READ_PERIOD
+        int "Input device read period(ms)"
+        range 10 100
+        default 20
+    
+    config OS_LV_TASK_PRIORITY
+        int "GUI task priority"
+        range 5 30
+        default 10
+
+if !LV_CONF_MINIMAL
+    config OS_LV_TASK_STACK_SIZE
+        int "GUI task stack size"
+        range 2048 20480
+        default 4096
+endif
+if LV_CONF_MINIMAL
+    config OS_LV_TASK_STACK_SIZE
+        int "GUI task stack size"
+        range 2048 20480
+        default 2048
+endif
+
+    config OS_LV_TASK_MSLEEP
+    int "GUI task msleep"
+    range 1 1000
+    default 5
+    
+    config OS_LV_BUFF_DOUBLE
+        bool "Enable LVGL two buff"
+        default n
+    
+    config OS_USING_PERF_MONITOR
+        bool "Enable CPU usage and FPS count Show"
+        default n
+    
+    config OS_USING_MEM_MONITOR
+        bool "Show the used memory and the memory fragmentation"
+        default n
+
+
+
+    config OS_USING_GPU_STM32_DMA2D
+        bool "Enable graphics acceleration"
+        #select OS_GRAPHIC_GPU_ENABLE
+        default n
+
+    config OS_USING_DRAW_COMPLEX
+        bool "Enable complex draw engine"
+        default y if !LV_CONF_MINIMAL
+
+    config LV_SHADOW_CACHE_SIZE
+        int "Allow buffering some shadow calculation"
+        depends on OS_USING_DRAW_COMPLEX
+        default 0
+        help
+            LV_SHADOW_CACHE_SIZE is the max shadow size to buffer, where
+            shadow size is `shadow_width + radius`.
+            Caching has LV_SHADOW_CACHE_SIZE^2 RAM cost.
+
+    config LV_CIRCLE_CACHE_SIZE
+        int "Set number of maximally cached circle data"
+        depends on OS_USING_DRAW_COMPLEX
+        default 4
+        help
+            The circumference of 1/4 circle are saved for anti-aliasing
+            radius * 4 bytes are used per circle (the most often used
+            radiuses are saved).
+            Set to 0 to disable caching.
+
+    config LV_IMG_CACHE_DEF_SIZE
+        int "Default image cache size, Image caching keeps the images opened"
+        default 1
+        help
+            If only the built-in image formats are used there is
+            no real advantage of caching. (I.e. if no new image decoder is added),
+            With complex image decoders (e.g. PNG or JPG)
+            caching can save the continuous open/decode of images
+            However the opened images might consume additional RAM.
+endmenu
+
+
+menu "Widget usage"
+    config _LV_USE_ARC
+        bool "Arc."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_BAR
+        bool "Bar."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_BTN
+        bool "Button."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_BTNMATRIX
+        bool "Button matrix."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_CANVAS
+        bool "Canvas. Dependencies: lv_img."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_CHECKBOX
+        bool "Check Box"
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_DROPDOWN
+        bool "Drop down list. Requires: lv_label."
+        select _LV_USE_LABEL
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_IMG
+        bool "Image. Requires: lv_label."
+        select _LV_USE_LABEL
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_LABEL
+        bool "Label."
+        default y if !LV_CONF_MINIMAL
+    config _LV_LABEL_TEXT_SELECTION
+        bool "Enable selecting text of the label."
+        depends on _LV_USE_LABEL
+        default y
+    config _LV_LABEL_LONG_TXT_HINT
+        bool "Store extra some info in labels (12 bytes) to speed up drawing of very long texts."
+        depends on _LV_USE_LABEL
+        default y
+    config _LV_USE_LINE
+        bool "Line."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_ROLLER
+        bool "Roller. Requires: lv_label."
+        select _LV_USE_LABEL
+        default y if !LV_CONF_MINIMAL
+    config _LV_ROLLER_INF_PAGES
+        int "Number of extra 'pages' when the controller is infinite."
+        default 7
+        depends on _LV_USE_ROLLER
+    config _LV_USE_SLIDER
+        bool "Slider. Requires: lv_bar."
+        select _LV_USE_BAR
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_SWITCH
+        bool "Switch."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_TEXTAREA
+        bool "Text area. Requires: lv_label."
+        select _LV_USE_LABEL
+        default y if !LV_CONF_MINIMAL
+    config _LV_TEXTAREA_DEF_PWD_SHOW_TIME
+        int "Text area def. pwd show time [ms]."
+        default 1500
+        depends on _LV_USE_TEXTAREA
+    config _LV_USE_TABLE
+        bool "Table."
+        default y if !LV_CONF_MINIMAL
+endmenu
+
+menu "Extra Widgets"
+    config _LV_USE_ANIMIMG
+        bool "Anim image."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_CALENDAR
+        bool "Calendar."
+        default y if !LV_CONF_MINIMAL
+    config _LV_CALENDAR_WEEK_STARTS_MONDAY
+        bool "Calendar week starts monday."
+        depends on _LV_USE_CALENDAR
+    config _LV_USE_CALENDAR_HEADER_ARROW
+        bool "Use calendar header arrow"
+        depends on _LV_USE_CALENDAR
+        default y
+    config _LV_USE_CALENDAR_HEADER_DROPDOWN
+        bool "Use calendar header dropdown"
+        depends on _LV_USE_CALENDAR
+        default y
+    config _LV_USE_CHART
+        bool "Chart."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_COLORWHEEL
+        bool "Colorwheel."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_IMGBTN
+        bool "Imgbtn."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_KEYBOARD
+        bool "Keyboard."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_LED
+        bool "LED."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_LIST
+        bool "List."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_MENU
+        bool "Menu."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_METER
+        bool "Meter."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_MSGBOX
+        bool "Msgbox."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_SPINBOX
+        bool "Spinbox."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_SPINNER
+        bool "Spinner."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_TABVIEW
+        bool "Tabview."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_TILEVIEW
+        bool "Tileview"
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_WIN
+        bool "Win"
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_SPAN
+        bool "span"
+        default y if !LV_CONF_MINIMAL
+    config _LV_SPAN_SNIPPET_STACK_SIZE
+        int "Maximum number of span descriptor"
+        default 64
+        depends on _LV_USE_SPAN
+endmenu
+
+
+
+
+menu "Themes"
+    config _LV_USE_THEME_DEFAULT
+        bool "A simple, impressive and very complete theme"
+        default y if !LV_CONF_MINIMAL
+    config _LV_THEME_DEFAULT_DARK
+        bool "Yes to set dark mode, No to set light mode"
+        depends on _LV_USE_THEME_DEFAULT
+    config _LV_THEME_DEFAULT_GROW
+        bool "Enable grow on press"
+        default y
+        depends on _LV_USE_THEME_DEFAULT
+    config _LV_THEME_DEFAULT_TRANSITION_TIME
+        int "Default transition time in [ms]"
+        default 80
+        depends on _LV_USE_THEME_DEFAULT
+    config _LV_USE_THEME_BASIC
+        bool "A very simple theme that is a good starting point for a custom theme"
+        default y if !LV_CONF_MINIMAL
+endmenu
+
+
+
+menu "Layouts"
+    config _LV_USE_FLEX
+        bool "A layout similar to Flexbox in CSS."
+        default y if !LV_CONF_MINIMAL
+    config _LV_USE_GRID
+        bool "A layout similar to Grid in CSS."
+        default y if !LV_CONF_MINIMAL
+endmenu
+
+
+
+menu "Text Settings"
+    choice LV_TXT_ENC
+        prompt "Select a character encoding for strings"
+        help
+            Select a character encoding for strings. Your IDE or editor should have the same character encoding.
+        default _LV_TXT_ENC_UTF8 if !LV_CONF_MINIMAL
+        default _LV_TXT_ENC_ASCII if LV_CONF_MINIMAL
+
+        config _LV_TXT_ENC_UTF8
+            bool "UTF8"
+        config _LV_TXT_ENC_ASCII
+            bool "ASCII"
+    endchoice
+endmenu
+
+
+
+
+menu "Font usage"
+    menu "Enable built-in fonts"
+        config _LV_FONT_MONTSERRAT_8
+            bool "Enable Montserrat 8"
+        config _LV_FONT_MONTSERRAT_10
+            bool "Enable Montserrat 10"
+        config _LV_FONT_MONTSERRAT_12
+            bool "Enable Montserrat 12"
+        config _LV_FONT_MONTSERRAT_14
+            bool "Enable Montserrat 14"
+            default y if !LV_CONF_MINIMAL
+        config _LV_FONT_MONTSERRAT_16
+            bool "Enable Montserrat 16"
+        config _LV_FONT_MONTSERRAT_18
+            bool "Enable Montserrat 18"
+        config _LV_FONT_MONTSERRAT_20
+            bool "Enable Montserrat 20"
+        config _LV_FONT_MONTSERRAT_22
+            bool "Enable Montserrat 22"
+        config _LV_FONT_MONTSERRAT_24
+            bool "Enable Montserrat 24"
+        config _LV_FONT_MONTSERRAT_26
+            bool "Enable Montserrat 26"
+        config _LV_FONT_MONTSERRAT_28
+            bool "Enable Montserrat 28"
+        config _LV_FONT_MONTSERRAT_30
+            bool "Enable Montserrat 30"
+        config _LV_FONT_MONTSERRAT_32
+            bool "Enable Montserrat 32"
+        config _LV_FONT_MONTSERRAT_34
+            bool "Enable Montserrat 34"
+        config _LV_FONT_MONTSERRAT_36
+            bool "Enable Montserrat 36"
+        config _LV_FONT_MONTSERRAT_38
+            bool "Enable Montserrat 38"
+        config _LV_FONT_MONTSERRAT_40
+            bool "Enable Montserrat 40"
+        config _LV_FONT_MONTSERRAT_42
+            bool "Enable Montserrat 42"
+        config _LV_FONT_MONTSERRAT_44
+            bool "Enable Montserrat 44"
+        config _LV_FONT_MONTSERRAT_46
+            bool "Enable Montserrat 46"
+        config _LV_FONT_MONTSERRAT_48
+            bool "Enable Montserrat 48"
+
+        config _LV_FONT_MONTSERRAT_12_SUBPX
+            bool "Enable Montserrat 12 sub-pixel"
+        config _LV_FONT_MONTSERRAT_28_COMPRESSED
+            bool "Enable Montserrat 28 compressed"
+        config _LV_FONT_DEJAVU_16_PERSIAN_HEBREW
+            bool "Enable Dejavu 16 Persian, Hebrew, Arabic letters"
+        config _LV_FONT_SIMSUN_16_CJK
+            bool "Enable Simsun 16 CJK"
+
+        config _LV_FONT_UNSCII_8
+            bool "Enable UNSCII 8 (Perfect monospace font)"
+            default y if LV_CONF_MINIMAL
+        config _LV_FONT_UNSCII_16
+            bool "Enable UNSCII 16 (Perfect monospace font)"
+
+        config _LV_FONT_CUSTOM
+            bool "Enable the custom font"
+        config _LV_FONT_CUSTOM_DECLARE
+            string "Header to include for the custom font"
+            depends on _LV_FONT_CUSTOM
+    endmenu
+
+    choice _LV_FONT_DEFAULT
+        prompt "Select theme default title font"
+        default _LV_FONT_DEFAULT_MONTSERRAT_14 if !LV_CONF_MINIMAL
+        default _LV_FONT_DEFAULT_UNSCII_8 if LV_CONF_MINIMAL
+        help
+            Select theme default title font
+
+        config _LV_FONT_DEFAULT_MONTSERRAT_8
+            bool "Montserrat 8"
+            select _LV_FONT_MONTSERRAT_8
+        config _LV_FONT_DEFAULT_MONTSERRAT_12
+            bool "Montserrat 12"
+            select _LV_FONT_MONTSERRAT_12
+        config _LV_FONT_DEFAULT_MONTSERRAT_14
+            bool "Montserrat 14"
+            select _LV_FONT_MONTSERRAT_14
+        config _LV_FONT_DEFAULT_MONTSERRAT_16
+            bool "Montserrat 16"
+            select _LV_FONT_MONTSERRAT_16
+        config _LV_FONT_DEFAULT_MONTSERRAT_18
+            bool "Montserrat 18"
+            select _LV_FONT_MONTSERRAT_18
+        config _LV_FONT_DEFAULT_MONTSERRAT_20
+            bool "Montserrat 20"
+            select _LV_FONT_MONTSERRAT_20
+        config _LV_FONT_DEFAULT_MONTSERRAT_22
+            bool "Montserrat 22"
+            select _LV_FONT_MONTSERRAT_22
+        config _LV_FONT_DEFAULT_MONTSERRAT_24
+            bool "Montserrat 24"
+            select _LV_FONT_MONTSERRAT_24
+        config _LV_FONT_DEFAULT_MONTSERRAT_26
+            bool "Montserrat 26"
+            select _LV_FONT_MONTSERRAT_26
+        config _LV_FONT_DEFAULT_MONTSERRAT_28
+            bool "Montserrat 28"
+            select _LV_FONT_MONTSERRAT_28
+        config _LV_FONT_DEFAULT_MONTSERRAT_30
+            bool "Montserrat 30"
+            select _LV_FONT_MONTSERRAT_30
+        config _LV_FONT_DEFAULT_MONTSERRAT_32
+            bool "Montserrat 32"
+            select _LV_FONT_MONTSERRAT_32
+        config _LV_FONT_DEFAULT_MONTSERRAT_34
+            bool "Montserrat 34"
+            select _LV_FONT_MONTSERRAT_34
+        config _LV_FONT_DEFAULT_MONTSERRAT_36
+            bool "Montserrat 36"
+            select _LV_FONT_MONTSERRAT_36
+        config _LV_FONT_DEFAULT_MONTSERRAT_38
+            bool "Montserrat 38"
+            select _LV_FONT_MONTSERRAT_38
+        config _LV_FONT_DEFAULT_MONTSERRAT_40
+            bool "Montserrat 40"
+            select _LV_FONT_MONTSERRAT_40
+        config _LV_FONT_DEFAULT_MONTSERRAT_42
+            bool "Montserrat 42"
+            select _LV_FONT_MONTSERRAT_42
+        config _LV_FONT_DEFAULT_MONTSERRAT_44
+            bool "Montserrat 44"
+            select _LV_FONT_MONTSERRAT_44
+        config _LV_FONT_DEFAULT_MONTSERRAT_46
+            bool "Montserrat 46"
+            select _LV_FONT_MONTSERRAT_46
+        config _LV_FONT_DEFAULT_MONTSERRAT_48
+            bool "Montserrat 48"
+            select _LV_FONT_MONTSERRAT_48
+        config _LV_FONT_DEFAULT_MONTSERRAT_12_SUBPX
+            bool "Montserrat 12 sub-pixel"
+            select _LV_FONT_MONTSERRAT_12_SUBPX
+        config _LV_FONT_DEFAULT_MONTSERRAT_28_COMPRESSED
+            bool "Montserrat 28 compressed"
+            select _LV_FONT_MONTSERRAT_28_COMPRESSED
+        config _LV_FONT_DEFAULT_DEJAVU_16_PERSIAN_HEBREW
+            bool "Dejavu 16 Persian, Hebrew, Arabic letters"
+            select _LV_FONT_DEJAVU_16_PERSIAN_HEBREW
+        config _LV_FONT_DEFAULT_SIMSUN_16_CJK
+            bool "Simsun 16 CJK"
+            select _LV_FONT_SIMSUN_16_CJK
+        config _LV_FONT_DEFAULT_UNSCII_8
+            bool "UNSCII 8 (Perfect monospace font)"
+            select _LV_FONT_UNSCII_8
+        config _LV_FONT_DEFAULT_UNSCII_16
+            bool "UNSCII 16 (Perfect monospace font)"
+            select _LV_FONT_UNSCII_16
+    endchoice
+endmenu
+
+
+menu "LVGL FileSystem"
+    config OS_USING_GUI_LVGL_FILESYSTEM
+        bool "LVGL using filesystem"
+        select OS_USING_VFS
+        default n
+
+    if OS_USING_GUI_LVGL_FILESYSTEM
+        choice
+            prompt "Select mount device"
+            default OS_LV_FS_MOUNT_SDCARD
+
+            config OS_LV_FS_MOUNT_SDCARD
+                bool "SD/TF Card"
+                select OS_USING_VFS_FATFS
+                select OS_USING_SPI
+                select BSP_USING_SDCARD
+
+            config OS_LV_FS_MOUNT_SFALSH
+                bool "SPI Flash"
+                select OS_USING_SPI
+                select OS_USING_QSPI
+                select OS_USING_SFUD
+                select OS_SFUD_USING_QSPI
+                select OS_SFLASH_SUPPORT
+                select OS_USING_FAL
+                select OS_USING_AUTO_MOUNT
+
+                if OS_LV_FS_MOUNT_SFALSH
+                    choice
+                        prompt "select mount fs type"
+                        default OS_LV_MOUNT_FS_TYPE_FATFS
+                        config OS_LV_MOUNT_FS_TYPE_FATFS
+                            bool "use fat fs and mounted"
+                            select OS_USING_VFS_FATFS
+                    endchoice
+                endif
+
+        endchoice
+    endif
+
+endmenu
+
+
+menu "LVGL Log"
+    config OS_USING_LVGL_LOG
+        bool "Enable the log module"
+        default n
+
+    choice
+        bool "Default LVGL log level" if OS_USING_LVGL_LOG
+        default _LV_LOG_LEVEL_WARN
+        help
+            Specify how important log should be added.
+
+        config _LV_LOG_LEVEL_TRACE
+            bool "TRACE"
+        config _LV_LOG_LEVEL_INFO
+            bool "INFO"
+        config _LV_LOG_LEVEL_WARN
+            bool "WARNING"
+        config _LV_LOG_LEVEL_ERROR
+            bool "ERROR"
+        config _LV_LOG_LEVEL_USER
+            bool "USER LOG"
+        config _LV_LOG_LEVEL_NONE
+            bool "NO LOG"
+    endchoice
+
+    config LV_LOG_LEVEL
+        int
+        default 0 if _LV_LOG_LEVEL_TRACE
+        default 1 if _LV_LOG_LEVEL_INFO
+        default 2 if _LV_LOG_LEVEL_WARN
+        default 3 if _LV_LOG_LEVEL_ERROR
+        default 4 if _LV_LOG_LEVEL_USER
+        default 5 if _LV_LOG_LEVEL_NONE
+endmenu
+
+menu "LVGL Asserts"
+    config _LV_USE_ASSERT_NULL
+        bool "Check if the parameter is NULL. (fast)"
+        default y if !LV_CONF_MINIMAL
+
+    config _LV_USE_ASSERT_MALLOC
+        bool "Checks if the memory is successfully allocated or no. (fast)"
+        default y if !LV_CONF_MINIMAL
+
+    config _LV_USE_ASSERT_STYLE
+        bool "Check if the styles are properly initialized. (fast)"
+        default n
+
+    config _LV_USE_ASSERT_MEM_INTEGRITY
+        bool "Check the integrity of `lv_mem` after critical operations. (Slow)"
+        default n
+
+    config _LV_USE_ASSERT_OBJ
+        bool "Check NULL, the object's type and existence. (Slow)."
+        default n
+endmenu
+
+
+
+menu "Third party Lib"
+    config OS_USING_GUI_LVGL_GIF
+        bool "Enable LVGL GIF"
+        default n
+    
+    config OS_USING_GUI_LVGL_PNG
+        bool "Enable LVGL PNG"
+        default n
+    
+    config OS_USING_GUI_LVGL_JPG
+        bool "Enable LVGL JPG"
+        default n
+    
+    config OS_USING_GUI_LVGL_BMP
+        bool "Enable LVGL BMP"
+        default n
+    
+    config OS_USING_GUI_LVGL_QRCODE
+        bool "Enable LVGL QRCODE"
+        default n
+endmenu
+
+
+source "$OS_ROOT/components/gui/lvgl8.2/oneos_extra/Kconfig"
+
+
+menuconfig OS_USING_GUI_LVGL_EXAMPLES
+    bool "Enable LVGL examples"
+    default n
+    if OS_USING_GUI_LVGL_EXAMPLES
+
+    menu  "get start examples"
+        config OS_USING_GUI_EX_START
+        bool "Enable LVGL example start"
+        select _LV_USE_BTN
+        select _LV_USE_LABEL
+        default n
+    endmenu
+
+    menu  "core widgets examples"
+        config OS_USING_GUI_EX_ARC
+            bool "Enable LVGL example arc"
+            default n
+        config OS_USING_GUI_EX_BAR
+            bool "Enable LVGL example bar"
+            default n
+        config OS_USING_GUI_EX_BTN
+            bool "Enable LVGL example btn"
+            default n
+        config OS_USING_GUI_EX_BTNMATRIX
+            bool "Enable LVGL example btnmatrix"
+            default n
+        config OS_USING_GUI_EX_CANVAS
+            bool "Enable LVGL example canvas"
+            default n
+        config OS_USING_GUI_EX_ANIMIMG
+            bool "Enable LVGL example animing"
+            default n
+        config OS_USING_GUI_EX_CHART
+            bool "Enable LVGL example chart"
+            default n
+        config OS_USING_GUI_EX_CHECKBOX
+            bool "Enable LVGL example checkbox"
+            default n
+        config OS_USING_GUI_EX_COLORWHEEL
+            bool "Enable LVGL example colorwheel"
+            default n
+        config OS_USING_GUI_EX_DROPDOWN
+            bool "Enable LVGL example dropdown"
+            default n
+        config OS_USING_GUI_EX_IMG
+            bool "Enable LVGL example img"
+            default n
+        config OS_USING_GUI_EX_IMGBTN
+            bool "Enable LVGL example imgbtn"
+            default n
+        config OS_USING_GUI_EX_KEYBOARD
+            bool "Enable LVGL example keyboard"
+            default n
+        config OS_USING_GUI_EX_LABEL
+            bool "Enable LVGL example label"
+            default n
+        config OS_USING_GUI_EX_LED
+            bool "Enable LVGL example led"
+            default n
+        config OS_USING_GUI_EX_LINE
+            bool "Enable LVGL example line"
+            default n
+        config OS_USING_GUI_EX_LIST
+            bool "Enable LVGL example list"
+            default n
+        config OS_USING_GUI_EX_MENU
+            bool "Enable LVGL example menu"
+            default n
+        config OS_USING_GUI_EX_METER
+            bool "Enable LVGL example meter"
+            default n
+        config OS_USING_GUI_EX_MSGBOX
+            bool "Enable LVGL example msgbox"
+            default n
+        config OS_USING_GUI_EX_OBJ
+            bool "Enable LVGL example obj"
+            default n
+        config OS_USING_GUI_EX_ROLLER
+            bool "Enable LVGL example roller"
+            default n
+        config OS_USING_GUI_EX_SLIDER
+            bool "Enable LVGL example slider"
+            default n
+        config OS_USING_GUI_EX_SPAN
+            bool "Enable LVGL example span"
+            default n
+        config OS_USING_GUI_EX_SPINBOX
+            bool "Enable LVGL example spinbox"
+            default n
+        config OS_USING_GUI_EX_SPINNER
+            bool "Enable LVGL example spinner"
+            default n
+        config OS_USING_GUI_EX_SWITCH
+            bool "Enable LVGL example switch"
+            default n
+        config OS_USING_GUI_EX_TABLE
+            bool "Enable LVGL example table"
+            default n
+        config OS_USING_GUI_EX_TABVIEW
+            bool "Enable LVGL example tabview"
+            default n
+        config OS_USING_GUI_EX_TILEVIEW
+            bool "Enable LVGL example tileview"
+            default n
+        config OS_USING_GUI_EX_WIN
+            bool "Enable LVGL example win"
+            default n
+    endmenu
+
+    menu  "animation examples"
+        config OS_USING_GUI_EX_ANIM_1
+            bool "Start animation on an event"
+            default n
+        config OS_USING_GUI_EX_ANIM_2
+            bool "Create a playback animation"
+            default n
+        config OS_USING_GUI_EX_ANIMTIMELINE
+            bool "Create animation timeline"
+            default n
+    endmenu
+
+    menu  "event examples"
+        config OS_USING_GUI_EX_EVENT
+            bool "Enable LVGL example event"
+            default n
+    endmenu
+
+    menu  "layouts examples"
+        config OS_USING_GUI_EX_FLEX
+            bool "Enable LVGL example flex"
+            default n
+        config OS_USING_GUI_EX_GRID
+            bool "Enable LVGL example grid"
+            default n
+    endmenu
+
+    menu  "Third party Lib examples"
+        config OS_USING_GUI_EX_BMP
+            bool "Enable LVGL example bmp"
+            select OS_USING_GUI_LVGL_BMP
+            default n
+        config OS_USING_GUI_EX_GIF
+            bool "Enable LVGL example gif"
+            select OS_USING_GUI_LVGL_GIF
+            default n
+        config OS_USING_GUI_EX_PNG
+            bool "Enable LVGL example png"
+            select OS_USING_GUI_LVGL_PNG
+            default n
+        config OS_USING_GUI_EX_JPG
+            bool "Enable LVGL example jpg"
+            select OS_USING_GUI_LVGL_JPG
+            default n
+        config OS_USING_GUI_EX_QRCODE
+            bool "Enable LVGL example qrcode"
+            select OS_USING_GUI_LVGL_QRCODE
+            default n
+        config OS_USING_GUI_EX_FREETYPE
+            bool "Enable LVGL example freetype"
+            select OS_USING_LVGL_EXTRA_FREETYPE
+            default n
+    endmenu
+
+
+
+endif
+
+menuconfig OS_USING_GUI_LVGL_DEMO
+    bool "Enable LVGL Demo"
+    default n
+
+    if OS_USING_GUI_LVGL_DEMO
+    if !LV_CONF_MINIMAL
+        config _LV_USE_DEMO_BENCHMARK
+            bool "Enable LVGL demo benchmark"
+            default y
+        
+        config _LV_USE_DEMO_MINIMAL
+            bool "Enable LVGL demo minimal test"
+            default n
+    endif
+    if LV_CONF_MINIMAL
+        config _LV_USE_DEMO_BENCHMARK
+            bool "Enable LVGL demo benchmark"
+            default n
+        
+        config _LV_USE_DEMO_MINIMAL
+            bool "Enable LVGL demo minimal test"
+            select _LV_USE_THEME_DEFAULT
+            default y
+    endif
+    config _LV_USE_DEMO_MUSIC
+        bool "Enable LVGL demo music"
+        select _LV_FONT_MONTSERRAT_12
+        select _LV_FONT_MONTSERRAT_16
+        default n
+    
+    config _LV_USE_DEMO_KEYPAD_AND_ENCODER
+        bool "Enable LVGL demo keypad and encoder"
+        default n
+    
+    config _LV_USE_DEMO_STRESS
+        bool "Enable LVGL demo stress"
+        default n
+    
+    config _LV_USE_DEMO_WIDGETS
+        bool "Enable LVGL demo widgets"
+        default n
+endif
+

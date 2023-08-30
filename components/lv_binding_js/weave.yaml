@@ -1,0 +1,16 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+add_subdirectory:
+  - src/deps/libtuv
+  - src/deps/lvgl8.2/yaml
+  - src/deps/lv_drivers
+  - src/jsruntime
+  - src/utils
+  - src/engine
+  - src/render
+

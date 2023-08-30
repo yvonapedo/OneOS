@@ -1,0 +1,24 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译选项（支持条件表达式）
+build_option:
+  cpppath:  # The list of directories that the C preprocessor will search for include directories。
+    - ./
+
+# 源码（支持条件表达式）
+source_file:
+    - ./quickjs.c
+    - ./repl.c
+    - ./qjs.c
+    - ./libregexp.c
+    - ./libunicode.c
+    - ./cutils.c
+    - ./quickjs-libc.c
+    - ./libbf.c
+    - ./qjscalc.c
+    - ./oneos_jquick_mutex.c

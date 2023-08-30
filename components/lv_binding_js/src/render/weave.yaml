@@ -1,0 +1,132 @@
+# 组名
+group_name: lv_binding_js
+
+# 依赖宏控
+depend_macro:
+  - USING_lv_binding_js
+
+# 编译连接信息
+build_option:
+  include:
+    - ../../src/deps/lv_conf.h
+    - ../../src/deps/lvgl8.2/lvgl/lvgl.h
+    - ../../src/jsruntime/sjs.h
+    - ../../src/jsruntime/deps/quickjs/quickjs-libc.h
+    - ../../src/jsruntime/deps/quickjs/quickjs.h
+    - ./native/core/utils/utils.hpp
+    
+  cpppath:
+    # - ./
+    - ../engine
+    - ../jsruntime/deps/quickjs
+    - ../deps/libtuv/include
+    - ../../src/deps
+    - ../../src/deps/lvgl8.2
+    - ../../src/deps/lvgl8.2/lvgl
+    - ../../src/deps/lvgl8.2/lvgl/oneos_port
+    
+    # - ./native/bootstrap
+    # - ./native/components
+    # - ./native/core/basic
+    # - ./native/core/dimensions
+    # - ./native/core/event
+    # - ./native/core/event/value_change
+    # - ./native/core/event/normal
+    # - ./native/core/event/select
+    # - ./native/core/event/click
+    # - ./native/core/img
+    # - ./native/core/img/png
+    # - ./native/core/img/gif
+    # - ./native/core/refresh
+    # - ./native/core/style
+    # - ./native/core/style/font
+    # - ./native/core/theme
+    # - ./native/core/utils
+
+    # - ./native/components/button
+    # - ./native/components/mask
+    # - ./native/components/gif
+    # - ./native/components/chart
+    # - ./native/components/tabview
+    # - ./native/components/calendar
+    # - ./native/components/Line
+    # - ./native/components/list
+    # - ./native/components/roller
+    # - ./native/components/progressbar
+    # - ./native/components/dropdownlist
+    # - ./native/components/checkbox
+    # - ./native/components/keyboard
+    # - ./native/components/textarea
+    # - ./native/components/switch
+    # - ./native/components/slider
+    # - ./native/components/image
+    # - ./native/components/text
+    # - ./native/components/view
+    # - ./native/components/window
+
+# 源码
+source_file:
+    - native/bootstrap/render_bootstrap.cpp
+    # - native/core/style/style.cpp
+    # - native/core/style/font/font.cpp
+    - native/core/event/value_change/value_change.cpp
+    - native/core/event/normal/normal.cpp
+    - native/core/event/select/select.cpp
+    - native/core/event/click/click.cpp
+    - native/core/event/event.cpp
+    # - native/core/refresh/refresh.cpp
+    # - native/core/utils/utils.cpp
+    # - native/core/theme/theme.cpp
+    # - native/core/dimensions/dimensions.cpp
+    # - native/core/basic/comp.cpp
+    # - native/core/event/event.cpp
+    # - native/core/img/png/lodepng.cpp
+    # - native/core/img/png/png.cpp
+    # - native/core/img/gif/gif.cpp
+    # - native/core/img/img.cpp
+    # - native/core/animate/animate.cpp
+
+    # - native/components/mask/mask.cpp
+    # - native/components/mask/mask_wrap.cpp
+    # - native/components/gif/gif.cpp
+    # - native/components/gif/gif_wrap.cpp
+    # - native/components/chart/chart.cpp
+    # - native/components/chart/chart_wrap.cpp
+    # - native/components/tabview/tabview.cpp
+    # - native/components/tabview/tabview_wrap.cpp
+    # - native/components/calendar/calendar.cpp
+    # - native/components/calendar/calendar_wrap.cpp
+    # - native/components/Line/line.cpp
+    # - native/components/Line/line_wrap.cpp
+    # - native/components/list/list.cpp
+    # - native/components/list/list_wrap.cpp
+    # - native/components/roller/roller.cpp
+    # - native/components/roller/roller_wrap.cpp
+    # - native/components/progressbar/progressbar.cpp
+    # - native/components/progressbar/progressbar_wrap.cpp
+    # - native/components/dropdownlist/dropdownlist.cpp
+    # - native/components/dropdownlist/dropdownlist_wrap.cpp
+    # - native/components/checkbox/checkbox.cpp
+    # - native/components/checkbox/checkbox_wrap.cpp
+    # - native/components/keyboard/keyboard.cpp
+    # - native/components/keyboard/keyboard_wrap.cpp
+    # - native/components/textarea/textarea.cpp
+    # - native/components/textarea/textarea_wrap.cpp
+    # - native/components/switch/switch.cpp
+    # - native/components/switch/switch_wrap.cpp
+    # - native/components/slider/slider.cpp
+    # - native/components/slider/slider_wrap.cpp
+    - native/components/button/button.cpp
+    - native/components/button/button_wrap.cpp
+    # - native/components/image/image.cpp
+    # - native/components/image/image_wrap.cpp
+    # - native/components/text/text.cpp
+    # - native/components/text/text_wrap.cpp
+    # - native/components/view/view.cpp
+    # - native/components/view/view_wrap.cpp
+    # - native/components/window/window.cpp
+    # - native/components/window/window_wrap.cpp
+    - native/components/component.cpp
+
+
+

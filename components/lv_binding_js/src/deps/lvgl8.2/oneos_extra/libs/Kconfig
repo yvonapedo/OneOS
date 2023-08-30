@@ -1,0 +1,4 @@
+menu "Libs"
+    source "$OS_ROOT/components/gui/lvgl8.2/oneos_extra/libs/*/Kconfig"
+endmenu
+
