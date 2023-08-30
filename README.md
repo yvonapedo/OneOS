@@ -262,5 +262,88 @@ Because the code structure in lv_binding_js is relatively large, we adopted the 
 - After the compilation link is passed, write render/react(copy) the folder to the development board through the SD card for subsequent testing.
 - Add the following code at engine.cpp at the end of the file to provide the shell function execution entry to ensure that it can be executed through the shell script command.
 
+
+
+## Difficulties and Solutions
+
+### Difficulty
+
+- **Environment Incompatibility**: Since the whole migration process involves many frameworks, libraries, compilation tools, and operating systems, many environment incompatible errors (500+) will appear during the compilation process, mainly in undeclared variables and functions, function parameters, and return value types. These errors include variables not being uniform, reference header file absence, and more.
+- **RAM Overflow**: After the entire code is compiled, it is found that there are RAM overflows, resulting in a link error.
+
+### Solution
+
+- **For Compilation Errors Caused by Environment Incompatibility**:
+  - If the relevant variables and functions are not further called and executed, you can choose to temporarily comment out the error location.
+  - Alternatively, you can choose to declare and initialize the variables yourself.
+  - If it is a library function, you can check if this function exists on both Windows and Linux platforms.
+- **For the RAM Overflow Problem**:
+  - Choose to add external expansion RAM and flash to increase the RAM of the development board and solve the overflow problem.
+
+## Result Display & Result Analysis
+
+You can directly use the compiled and linked bin file in this repository `\OneOS\projects\STM32F103ZE\out` to burn it into the STM32F103ZE development board. Alternatively, you can compile and link it yourself to generate bin and ELF documents.
+
+### Build
+
+1. After the configuration and debugging are completed, navigate to the `\OneOS\projects\STM32F103ZE` path, right-click to open OneOS Cube, and execute the following command to clear the current compiled content:
+   
+   ```
+   oos clean
+   ```
+   
+2. Execute the following command and wait for the compilation to complete:
+   
+   ```
+   oos build
+   ```
+   
+3. After the compilation (build) and (link) are completed, the `out` folder and the corresponding files inside will be generated in the project file for burning.
+
+### Test QuickJS
+
+1. Burn the compiled bin file to the development board.
+2. Open the serial port debugging tool MobaXterm for code debugging.
+3. Open the shell terminal under OneOS, and you can see the script commands that can be used after the current configuration is completed, including the QuickJS we just compiled.
+4. Create a new JS file, execute the QuickJS script command, and test the execution of QuickJS.
+
+
+# Summary 
+
+
+### OneOS Overview
+
+- OneOS is a lightweight operating system developed by China Mobile for IoT applications. It's tailored, cross-platform, energy-efficient, and secure.
+- It supports chips like ARM Cortex-A, Cortex-M, MIPS, and RISC-V, and is compatible with interfaces like POSIX and CMSIS.
+- OneOS supports jerryScript and iotjs for JavaScript execution.
+
+### lv_binding_js
+
+- An open-source project based on LVGL that allows LVGL operations using JavaScript.
+- It uses React's virtual DOM for LVGL UI components, offering a fast development experience.
+- It depends on the quickjs execution engine.
+
+### quickjs
+
+- A lightweight JavaScript engine supporting the ES2019 specification.
+- Suitable for embedded devices due to its fast startup and low memory footprint.
+
+### Project Construction & Development Implementation
+
+- The report provides a step-by-step guide on setting up the environment, cloning the project, building the project, connecting the development board, and other related tasks.
+
+### Transplantation of quickjs and lv_binding_js
+
+- The report details the process of transplanting quickjs and lv_binding_js to OneOS. This includes preparing the source code, configuring the compilation, and debugging.
+
+### Difficulties and Solutions
+
+- Challenges faced during the transplantation process include environment incompatibility and RAM overflow.
+- Solutions include commenting out unnecessary code, declaring and initializing variables, and adding external RAM.
+
+### Result Display & Analysis
+
+- The report provides instructions on how to build the project, test quickjs, and execute scripts on the development board.
+
 ---
 
